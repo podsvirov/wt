@@ -36,10 +36,25 @@ IF(CONNECTOR_ISAPI)
       )
     ENDIF(MSVC)
 
+    IF(NOT CMAKE_VERSION VERSION_LESS 2.8.12)
+      SET_TARGET_PROPERTIES(wtisapi PROPERTIES EXPORT_NAME Isapi)
+      SET(_EXPORT_wt_target_isapi EXPORT wt-target-isapi)
+    ELSE()
+      SET(_EXPORT_wt_target_isapi)
+    ENDIF()
+
     INSTALL(TARGETS wtisapi
+      ${_EXPORT_wt_target_isapi}
       RUNTIME DESTINATION bin
       LIBRARY DESTINATION ${LIB_INSTALL_DIR}
       ARCHIVE DESTINATION ${LIB_INSTALL_DIR})
+
+    IF(NOT CMAKE_VERSION VERSION_LESS 2.8.12)
+      INSTALL(EXPORT wt-target-isapi
+        DESTINATION ${CMAKE_INSTALL_DIR}/wt
+        NAMESPACE Wt::)
+    ENDIF()
+    UNSET(_EXPORT_wt_target_isapi)
 
   ENDIF(NOT MULTI_THREADED)
 

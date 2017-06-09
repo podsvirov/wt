@@ -64,10 +64,25 @@ IF(ENABLE_SQLITE)
     ENDIF(DL_LIB)
   ENDIF(NOT WIN32)
 
+  IF(NOT CMAKE_VERSION VERSION_LESS 2.8.12)
+    SET_TARGET_PROPERTIES(wtdbosqlite3 PROPERTIES EXPORT_NAME DboSqlite3)
+    SET(_EXPORT_wt_target_dbosqlite3 EXPORT wt-target-dbosqlite3)
+  ELSE()
+    SET(_EXPORT_wt_target_dbosqlite3)
+  ENDIF()
+
   INSTALL(TARGETS wtdbosqlite3
+    ${_EXPORT_wt_target_dbosqlite3}
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION ${LIB_INSTALL_DIR}
     ARCHIVE DESTINATION ${LIB_INSTALL_DIR})
+
+  IF(NOT CMAKE_VERSION VERSION_LESS 2.8.12)
+    INSTALL(EXPORT wt-target-dbosqlite3
+      DESTINATION ${CMAKE_INSTALL_DIR}/wt
+      NAMESPACE Wt::)
+  ENDIF()
+  UNSET(_EXPORT_wt_target_dbosqlite3)
 
   SET_TARGET_PROPERTIES(
     wtdbosqlite3
@@ -116,10 +131,25 @@ IF(ENABLE_POSTGRES AND POSTGRES_FOUND)
 
   INCLUDE_DIRECTORIES(${POSTGRES_INCLUDE})
 
+  IF(NOT CMAKE_VERSION VERSION_LESS 2.8.12)
+    SET_TARGET_PROPERTIES(wtdbopostgres PROPERTIES EXPORT_NAME DboPostgres)
+    SET(_EXPORT_wt_target_dbopostgres EXPORT wt-target-dbopostgres)
+  ELSE()
+    SET(_EXPORT_wt_target_dbopostgres)
+  ENDIF()
+
   INSTALL(TARGETS wtdbopostgres
+    ${_EXPORT_wt_target_dbopostgres}
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION ${LIB_INSTALL_DIR}
     ARCHIVE DESTINATION ${LIB_INSTALL_DIR})
+
+  IF(NOT CMAKE_VERSION VERSION_LESS 2.8.12)
+    INSTALL(EXPORT wt-target-dbopostgres
+      DESTINATION ${CMAKE_INSTALL_DIR}/wt
+      NAMESPACE Wt::)
+  ENDIF()
+  UNSET(_EXPORT_wt_target_dbopostgres)
 
   SET_TARGET_PROPERTIES(
     wtdbopostgres
@@ -198,10 +228,25 @@ IF(ENABLE_FIREBIRD AND FIREBIRD_FOUND)
 	SET_TARGET_PROPERTIES(wtdbofirebird PROPERTIES FOLDER "dbo")
   ENDIF(MSVC)
 
+  IF(NOT CMAKE_VERSION VERSION_LESS 2.8.12)
+    SET_TARGET_PROPERTIES(wtdbofirebird PROPERTIES EXPORT_NAME DboFirebird)
+    SET(_EXPORT_wt_target_dbofirebird EXPORT wt-target-dbofirebird)
+  ELSE()
+    SET(_EXPORT_wt_target_dbofirebird)
+  ENDIF()
+
   INSTALL(TARGETS wtdbofirebird
+    ${_EXPORT_wt_target_dbofirebird}
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION ${LIB_INSTALL_DIR}
     ARCHIVE DESTINATION ${LIB_INSTALL_DIR})
+
+  IF(NOT CMAKE_VERSION VERSION_LESS 2.8.12)
+    INSTALL(EXPORT wt-target-dbofirebird
+      DESTINATION ${CMAKE_INSTALL_DIR}/wt
+      NAMESPACE Wt::)
+  ENDIF()
+  UNSET(_EXPORT_wt_target_dbofirebird)
 
   SET_TARGET_PROPERTIES(
     wtdbofirebird
@@ -248,10 +293,25 @@ IF(ENABLE_MYSQL AND MYSQL_FOUND)
 
   INCLUDE_DIRECTORIES(${MYSQL_INCLUDE})
 
+  IF(NOT CMAKE_VERSION VERSION_LESS 2.8.12)
+    SET_TARGET_PROPERTIES(wtdbomysql PROPERTIES EXPORT_NAME DboMySQL)
+    SET(_EXPORT_wt_target_dbomysql EXPORT wt-target-dbomysql)
+  ELSE()
+    SET(_EXPORT_wt_target_dbomysql)
+  ENDIF()
+
   INSTALL(TARGETS wtdbomysql
+    ${_EXPORT_wt_target_dbomysql}
     RUNTIME DESTINATION bin	
     LIBRARY DESTINATION ${LIB_INSTALL_DIR}
     ARCHIVE DESTINATION ${LIB_INSTALL_DIR})
+
+  IF(NOT CMAKE_VERSION VERSION_LESS 2.8.12)
+    INSTALL(EXPORT wt-target-dbomysql
+      DESTINATION ${CMAKE_INSTALL_DIR}/wt
+      NAMESPACE Wt::)
+  ENDIF()
+  UNSET(_EXPORT_wt_target_dbomysql)
 
   SET_TARGET_PROPERTIES(
     wtdbomysql
